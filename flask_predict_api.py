@@ -43,6 +43,21 @@ def predict_iris():
     prediction = model.predict(np.array([[s_length, s_width, p_length, p_width]]))
     return str(prediction)
 
+#defining another mothod to take input as file
+@app.route('/predict_file', methods=["POST"])
+def predict_iris_file():
+    """Example file endpoint returning a prediction of iris
+    ---
+    parameters:
+      - name: input_file
+        in: formData
+        type: file
+        required: true
+    """
+    input_data = pd.read_csv(request.files.get("input_file"), header=None)
+    prediction = model.predict(input_data)
+    return str(list(prediction))
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
     
